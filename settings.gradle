@@ -1,0 +1,2 @@
+rootProject.name = "And_Work_3_additional"
+include ':app'

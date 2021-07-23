@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Image Loader</string>
+
+    <string name="link_hint">Input the link for image</string>
+
+    <string name="button_label_picasso_load">Load with Picasso</string>
+    <string name="button_label_glide_load">Load with Glide</string>
+    <string name="button_label_native_load">Load with Android</string>
+
+    <string name="error_image_load_failed">Image loading failed</string>
+</resources>
