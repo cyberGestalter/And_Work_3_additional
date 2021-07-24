@@ -5,7 +5,6 @@ import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.VectorDrawable
-import android.os.AsyncTask
 import android.os.Build
 import android.os.Bundle
 import android.view.View
@@ -105,7 +104,8 @@ class MainActivity : AppCompatActivity() {
     fun loadImageWithAndroid(view: View) {
         imageView.setImageResource(R.drawable.before_load)
         val imageLink = inputLink.text.toString()
-        ImageLoader().execute(imageLink)
+        val imageLoader = ImageLoader(imageLink)
+        Thread(imageLoader).start()
     }
 
     private fun setErrorImageAndToast() {
@@ -115,24 +115,21 @@ class MainActivity : AppCompatActivity() {
             .show()
     }
 
-    inner class ImageLoader : AsyncTask<String, Any, Any>() {
-        override fun doInBackground(vararg params: String?): Any? {
-            return try {
-                val link = params[0]
+    inner class ImageLoader(private val link: String) : Runnable {
+        override fun run() {
+            val image: Bitmap? = try {
                 val imageURL = URL(link)
                 BitmapFactory.decodeStream(imageURL.openConnection().getInputStream())
             } catch (e: Exception) {
                 null
             }
-        }
-
-        override fun onPostExecute(result: Any?) {
-            if (result != null) {
-                imageView.setImageBitmap(result as Bitmap)
-            } else {
-                setErrorImageAndToast()
+            imageView.post {
+                if (image != null) {
+                    imageView.setImageBitmap(image)
+                } else {
+                    setErrorImageAndToast()
+                }
             }
         }
-
     }
 }
