@@ -2,14 +2,19 @@ package com.example.and_work_3_additional
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
+import android.graphics.drawable.VectorDrawable
 import android.os.AsyncTask
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.graphics.drawable.toBitmap
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
@@ -20,6 +25,7 @@ import java.net.URL
 
 class MainActivity : AppCompatActivity() {
 
+    private val IMAGE = "image"
     private lateinit var imageView: ImageView
     private lateinit var inputLink: EditText
 
@@ -28,7 +34,22 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         imageView = findViewById(R.id.image_loaded)
+        if (savedInstanceState != null) {
+            val image: Bitmap? = savedInstanceState.getParcelable(IMAGE)
+            imageView.setImageBitmap(image)
+        }
         inputLink = findViewById(R.id.input_link)
+    }
+
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        val bitmap = try {
+            (imageView.drawable as BitmapDrawable).bitmap
+        } catch (e: ClassCastException) {
+            (imageView.drawable as VectorDrawable).toBitmap()
+        }
+        outState.putParcelable(IMAGE, bitmap)
     }
 
     fun loadImageWithPicasso(view: View) {
