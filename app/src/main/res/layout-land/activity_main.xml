@@ -26,42 +26,40 @@
         android:layout_marginLeft="@dimen/default_margin"
         android:hint="@string/link_hint"
         android:inputType="textUri"
+        app:layout_constraintBottom_toTopOf="@+id/button_picasso_load"
         app:layout_constraintStart_toEndOf="@+id/image_loaded"
-        app:layout_constraintTop_toTopOf="@+id/image_loaded" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/button_picasso_load"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/default_margin"
-        android:layout_marginLeft="@dimen/default_margin"
         android:layout_marginTop="@dimen/default_margin"
         android:onClick="loadImageWithPicasso"
         android:text="@string/button_label_picasso_load"
-        app:layout_constraintStart_toEndOf="@+id/image_loaded"
+        app:layout_constraintBottom_toTopOf="@+id/button_glide_load"
+        app:layout_constraintStart_toStartOf="@+id/input_link"
         app:layout_constraintTop_toBottomOf="@+id/input_link" />
 
     <Button
         android:id="@+id/button_glide_load"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/default_margin"
-        android:layout_marginLeft="@dimen/default_margin"
         android:layout_marginTop="@dimen/default_margin"
         android:onClick="loadImageWithGlide"
         android:text="@string/button_label_glide_load"
-        app:layout_constraintStart_toEndOf="@+id/image_loaded"
+        app:layout_constraintBottom_toTopOf="@+id/button_native_load"
+        app:layout_constraintStart_toStartOf="@+id/input_link"
         app:layout_constraintTop_toBottomOf="@+id/button_picasso_load" />
 
     <Button
         android:id="@+id/button_native_load"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/default_margin"
-        android:layout_marginLeft="@dimen/default_margin"
         android:layout_marginTop="@dimen/default_margin"
         android:onClick="loadImageWithAndroid"
         android:text="@string/button_label_native_load"
-        app:layout_constraintStart_toEndOf="@+id/image_loaded"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/input_link"
         app:layout_constraintTop_toBottomOf="@+id/button_glide_load" />
 </androidx.constraintlayout.widget.ConstraintLayout>
